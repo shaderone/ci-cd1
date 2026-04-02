@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SYS.CALISTHENICS</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap');
+
+        :root {
+            --bg-color: #050505;
+            --surface-color: #121212;
+            --accent-color: #00ffcc;
+            --text-main: #e0e0e0;
+            --text-muted: #666666;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Space Mono', monospace;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            overflow-x: hidden;
+        }
+
+        /* Background Grid */
+        .grid-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-image: 
+                linear-gradient(rgba(0, 255, 204, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 204, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: -1;
+        }
+
+        /* Navbar */
+        nav {
+            padding: 2rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--text-main);
+            letter-spacing: 2px;
+        }
+
+        .logo span {
+            color: var(--accent-color);
+        }
+
+        .status {
+            font-size: 0.8rem;
+            color: var(--accent-color);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .pulse {
+            width: 8px;
+            height: 8px;
+            background-color: var(--accent-color);
+            border-radius: 50%;
+            animation: blink 1.5s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; box-shadow: 0 0 10px var(--accent-color); }
+            50% { opacity: 0.3; box-shadow: none; }
+        }
+
+        /* Hero Section */
+        header {
+            min-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 0 5%;
+            position: relative;
+        }
+
+        .sys-req {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        h1 {
+            font-size: clamp(3rem, 8vw, 6rem);
+            line-height: 1.1;
+            text-transform: uppercase;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 0 30px rgba(0, 255, 204, 0.1);
+        }
+
+        .typing-container {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            margin-bottom: 3rem;
+            max-width: 600px;
+            line-height: 1.6;
+            min-height: 60px;
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 10px;
+            height: 1.2rem;
+            background-color: var(--accent-color);
+            vertical-align: middle;
+            animation: blink 1s infinite;
+        }
+
+        .btn-init {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: transparent;
+            color: var(--accent-color);
+            border: 1px solid var(--accent-color);
+            font-size: 1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            max-width: max-content;
+        }
+
+        .btn-init:hover {
+            background: var(--accent-color);
+            color: var(--bg-color);
+            box-shadow: 0 0 20px rgba(0, 255, 204, 0.4);
+        }
+
+        /* Modules Section */
+        .modules-grid {
+            padding: 5rem 5%;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .module-card {
+            background: var(--surface-color);
+            border: 1px solid rgba(255,255,255,0.05);
+            padding: 2.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .module-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 3px;
+            height: 0;
+            background: var(--accent-color);
+            transition: height 0.3s ease;
+        }
+
+        .module-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(0, 255, 204, 0.3);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .module-card:hover::before {
+            height: 100%;
+        }
+
+        .mod-number {
+            font-size: 0.8rem;
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .module-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+        }
+
+        .module-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* Terminal Footer */
+        footer {
+            padding: 4rem 5%;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            margin-top: 4rem;
+        }
+
+        .terminal-box {
+            background: #000;
+            border: 1px solid #333;
+            padding: 1.5rem;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .terminal-box span {
+            color: var(--accent-color);
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="grid-bg"></div>
+
+    <nav>
+        <div class="logo">SYS<span>.</span>CALISTHENICS</div>
+        <div class="status">
+            <div class="pulse"></div>
+            ENVIRONMENT: ONLINE
+        </div>
+    </nav>
+
+    <header>
+        <div class="sys-req">// NO EXTERNAL DEPENDENCIES REQUIRED</div>
+        <h1>Override<br>Gravity.</h1>
+        <div class="typing-container">
+            <span id="typed-text"></span><span class="cursor"></span>
+        </div>
+        <a href="#modules" class="btn-init">Execute Protocol</a>
+    </header>
+
+    <section id="modules" class="modules-grid">
+        <div class="module-card">
+            <span class="mod-number">[ MODULE 01 ]</span>
+            <h3>Leverage</h3>
+            <p>Master the physics of the Front Lever. Manipulate your center of mass and rewrite the rules of tension. The ground is optional.</p>
+        </div>
+        <div class="module-card">
+            <span class="mod-number">[ MODULE 02 ]</span>
+            <h3>Propulsion</h3>
+            <p>The Muscle-Up is a pure explosive transition. Convert raw pulling mechanics into upward kinetic energy in a single, fluid compilation.</p>
+        </div>
+        <div class="module-card">
+            <span class="mod-number">[ MODULE 03 ]</span>
+            <h3>Equilibrium</h3>
+            <p>Handstand mechanics. Recalibrate your internal gyroscope. Balance is not found; it is actively maintained through micro-corrections.</p>
+        </div>
+    </section>
+
+    <footer>
+        <div class="terminal-box">
+            > root@body:~# check_hardware<br>
+            > [OK] Neural pathways optimized.<br>
+            > [OK] Muscular density scaling.<br>
+            > root@body:~# run <span>calisthenics.sh</span><br>
+            > Awaiting user input...
+        </div>
+    </footer>
+
+    <script>
+        // Simple Typing Effect Logic
+        const textToType = "Your body is the hardware. Movement is the source code. Strip away the weights and master the machine from the inside out.";
+        const typeTarget = document.getElementById('typed-text');
+        let index = 0;
+
+        function typeWriter() {
+            if (index < textToType.length) {
+                typeTarget.innerHTML += textToType.charAt(index);
+                index++;
+                setTimeout(typeWriter, 35); // Typing speed
+            }
+        }
+
+        // Delay start slightly for effect
+        setTimeout(typeWriter, 1000);
+
+        // Smooth scroll for the button
+        document.querySelector('.btn-init').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.querySelector('#modules').scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+    </script>
+</body>
+</html>
