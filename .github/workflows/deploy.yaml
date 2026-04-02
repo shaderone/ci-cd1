@@ -10,12 +10,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
-      - uses: actions/checkout@v4
+        uses: actions/checkout@v4
 
       - name: Upload to github Pages
-      - uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v3
         with:
           path: '.'
 
       - name: make site live
-      - uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v4
